@@ -1,5 +1,5 @@
-public interface IStack {
-    void push(int value);
-    int pop();
-    int operation(char operator, int value1, int value2);
+public interface IStack<T> {
+    public void push(T value);
+    public T pop();
+    public T operation(char operator, T value1, T value2);
 }
