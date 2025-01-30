@@ -36,17 +36,18 @@ public class Stack<T extends Number> implements IStack<T>{
 
     @Override
     public T operation(char operator, T value1, T value2) {
-        double a = value1.doubleValue();
-        double b = value2.doubleValue();
-        double resultado;
+        int a = value1.intValue();
+        int b = value2.intValue();
+        int resultado;
 
         switch (operator) {
-            case '+': resultado = a + b; break;
-            case '-': resultado = a - b; break;
-            case '*': resultado = a * b; break;
+            case '+': resultado = b + a; break;
+            case '-': resultado = b - a; break;
+            case '*': resultado = b * a; break;
+            case '%': resultado = b % a; break;
             case '/': 
-                if (b == 0) throw new ArithmeticException("División por cero.");
-                resultado = a / b;
+                if (a == 0) throw new ArithmeticException("División por cero.");
+                resultado = b / a;
                 break;
             default:
                 throw new IllegalArgumentException("Operador no válido: " + operator);
