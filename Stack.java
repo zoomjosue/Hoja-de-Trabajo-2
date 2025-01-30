@@ -9,24 +9,24 @@ public class Stack<T> implements IStack<T>{
     }
 
     /**
-     * Este metodo verifica si la stack esta vacia
+     * Este método verifica si la stack esta vacía
      *
-     * @return retorna true si la stack esta vacia, false si no esta vacia
+     * @return retorna true si la stack esta vacía, false si no esta vacía
      */
     public boolean isEmpty() {
         return top == null;
     }
 
     /**
-     * Etse metedo elimina y devuelve el ultimo elemento ingresado a la stack
+     * Este método elimina y devuelve el último elemento ingresado a la stack
      *
      * @return el elemento eliminado de la pila
-     * @throws IllegalStateException si la pila esta vacaa
+     * @throws IllegalStateException si la pila esta vacía
      */
     @Override
     public T pop() {
         if (isEmpty()) {
-            throw new IllegalStateException("Brother, el stack esta vacio");
+            throw new IllegalStateException("La stack está vacía");
         }
         T data = top.data;
         top = top.next;
@@ -40,10 +40,16 @@ public class Stack<T> implements IStack<T>{
         throw new UnsupportedOperationException("Unimplemented method 'operation'");
     }
 
+    
+    /**
+     * Este método agrega un nuevo valor en la parte superior de la stack
+     * @param value el valor a agregar en la stack
+     */
     @Override
     public void push(T value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        Node<T> newNode = new Node<T>(value);
+        newNode.next = top;
+        top = newNode;
+        size++;
     }
-       
 }
