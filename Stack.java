@@ -1,4 +1,4 @@
-public class Stack<T> implements IStack<T>{
+public class Stack<T extends Number> implements IStack<T>{
     private Node<T> top;
     private int size;
     
@@ -36,8 +36,23 @@ public class Stack<T> implements IStack<T>{
 
     @Override
     public T operation(char operator, T value1, T value2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'operation'");
+        double a = value1.doubleValue();
+        double b = value2.doubleValue();
+        double resultado;
+
+        switch (operator) {
+            case '+': resultado = a + b; break;
+            case '-': resultado = a - b; break;
+            case '*': resultado = a * b; break;
+            case '/': 
+                if (b == 0) throw new ArithmeticException("División por cero.");
+                resultado = a / b;
+                break;
+            default:
+                throw new IllegalArgumentException("Operador no válido: " + operator);
+        }
+
+        return (T) (Number) resultado; // Cast para devolver el resultado correcto
     }
 
     
