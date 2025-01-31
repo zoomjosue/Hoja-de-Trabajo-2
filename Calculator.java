@@ -1,38 +1,66 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Calculator {
-    private Stack<Integer> stack;
-
+    private Stack<Double> stack;
 
     /**
-     * Constructor de la clase PostFix
+     * Constructor de la clase Calculator
      */
     public Calculator() {
         stack = new Stack<>();
     }
 
-
     /**
      * Este método evalúa una operación en notación postfix
      *
-     * @param operation la operación en notación postfix
+     * @param operation la operación en notación postfix como una lista de cadenas
      * @return el resultado de la operación
      */
-    public int evaluatePostFix(String operation) {
-        Scanner scanner = new Scanner(operation);
-
-        while (scanner.hasNext()) {
-            if (scanner.hasNextInt()) {
-                stack.push(scanner.nextInt());
+    public double evaluatePostFix(ArrayList<String> operation) {
+        for (String str : operation) {
+            if (str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/") || str.equals("%")) {
+                double value2 = stack.pop();
+                double value1 = stack.pop();
+                stack.push(stack.operation(str.charAt(0), value1, value2));
             } else {
-                char operator = scanner.next().charAt(0);
-                int b = stack.pop();
-                int a = stack.pop();
-                int result = stack.operation(operator, a, b);
-                stack.push(result);
+                // Convertir el valor a Double antes de pasarlo a la pila
+                stack.push(Double.parseDouble(str));
             }
         }
-        scanner.close();
         return stack.pop();
+    }
+
+    /**
+     * Este método lee un archivo y evalúa las operaciones postfix en cada línea.
+     *
+     * @param file la ruta del archivo que contiene las operaciones postfix
+     */
+    public void calculate(String file) {
+        ArrayList<ArrayList<String>> documentLines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Separar palabras por espacios
+                ArrayList<String> prefixOperation = new ArrayList<>(Arrays.asList(line.split(" ")));
+                documentLines.add(prefixOperation);
+            }
+        } catch (IOException e) {
+            System.out.println("Error en lectura del documento: " + e.getMessage());
+        }
+
+        for (ArrayList<String> line : documentLines) {
+            try {
+                double result = evaluatePostFix(line);
+                System.out.println("\nOperación: " + line);
+                System.out.println("Resultado: " + result);
+            } catch (Exception e) {
+                System.out.println("Error al evaluar la línea: " + line + " - " + e.getMessage());
+            }
+        }
     }
 }
