@@ -20,7 +20,7 @@ public class Main {
                    calculator.calculate("datos.txt"); 
                    break;
 
-               case "2":
+               case "3":
                    System.out.println("Saliendo...");
                    calcOn = false;
                    break;
