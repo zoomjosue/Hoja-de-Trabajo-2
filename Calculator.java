@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
-public class PostFix {
+public class Calculator {
     private Stack<Integer> stack;
 
 
     /**
      * Constructor de la clase PostFix
      */
-    public PostFix() {
+    public Calculator() {
         stack = new Stack<>();
     }
 
